@@ -1,0 +1,12 @@
+{
+    "name": "statsd",
+    "type": "library",
+    "description": "StatsD PHP client library",
+    "keywords": ["statsd", "monitoring"],
+    "authors": [
+        {"name": "Dieter Provoost", "email": "contact@dieterprovoost.be"},
+    ],
+    "autoload": {
+        "psr-0": { "StatsD": "lib/" }
+    }
+}
