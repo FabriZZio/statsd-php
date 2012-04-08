@@ -30,3 +30,5 @@ For statistics under heavy, really heavy load, use a sample rate:
 
 [etsy]: http://www.etsy.com
 [statsd]: https://github.com/etsy/statsd
+
+[![Build Status](https://secure.travis-ci.org/FabriZZio/statsd-php.png?branch=master)](http://travis-ci.org/FabriZZio/statsd-php)
