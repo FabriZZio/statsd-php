@@ -71,6 +71,19 @@ class StatsDTest extends \PHPUnit_Framework_TestCase
 		$this->markTestSkipped('Using mt_rand() numbers internally. Any way to test this?');
 	}
 
+    /** @test **/
+    public function NamespacedStatCanBeSent()
+    {
+        $handler = $this->createHandlerMock();
+        $handler->expects($this->once())
+            ->method('write')
+            ->with(true, 'namespace.stats.test:123|c');
+
+        $statsD = new StatsD($handler);
+        $statsD->setNamespace('namespace');
+        $statsD->update('stats.test', 123);
+    }
+
 	protected function createHandlerMock() {
 		$handler = $this->getMock('StatsD\UdpHandler', array(), array(), '', false);
 		$handler->expects($this->any())

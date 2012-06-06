@@ -6,6 +6,9 @@ class StatsD
 	/** @var Handler **/
 	protected $handler;
 
+    /** @var string */
+    protected $namespace;
+
 	public function __construct(Handler $handler) {
 		$this->handler = $handler;
 	}
@@ -48,7 +51,12 @@ class StatsD
         try {
             $fp = $this->handler->open();
             if (! $fp) { return; }
-            foreach ($data as $stat => $value) {
+            foreach ($data as $stat => $value)
+            {
+                // use namespace when available
+                if($this->getNamespace()) {
+                    $stat = $this->getNamespace() . '.' . $stat;
+                }
                 $this->handler->write($fp, "$stat:$value");
             }
             $this->handler->close($fp);
@@ -73,5 +81,21 @@ class StatsD
         }
 
         return $sampledData;
+    }
+
+    /**
+     * @param string $namespace
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
     }
 }
