@@ -16,7 +16,7 @@ class UdpHandler implements Handler
 
     public function open()
     {
-    	return fsockopen('udp://' . $this->host, $this->port, $errno, $errstr);
+    	return @fsockopen('udp://' . $this->host, $this->port, $errno, $errstr);
     }
 
     public function write($resource, $data)
