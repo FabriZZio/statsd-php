@@ -1,5 +1,5 @@
 {
-    "name": "statsd",
+    "name": "fabrizzio/statsd",
     "type": "library",
     "description": "StatsD PHP client library",
     "keywords": ["statsd", "monitoring"],
