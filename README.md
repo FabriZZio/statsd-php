@@ -11,9 +11,9 @@ Usage
 Initializing the statsD client is simple:
 
     use StatsD\StatsD;
-    use StatsD\NodeJsHandler;
+    use StatsD\UdpHandler;
 
-    $statsD = new StatsD(new NodeJsHandler('localhost'));
+    $statsD = new StatsD(new UdpHandler('localhost'));
 
 Incrementing or decrementing a specific stat: 
 

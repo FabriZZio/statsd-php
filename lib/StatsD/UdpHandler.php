@@ -1,7 +1,7 @@
 <?php
 namespace StatsD;
 
-class NodeJsHandler implements Handler
+class UdpHandler implements Handler
 {
 	/** @var string **/
 	protected $host;

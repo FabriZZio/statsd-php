@@ -2,7 +2,6 @@
 namespace StatsD\Tests;
 
 use StatsD\StatsD;
-use StatsD\SocketHandler;
 
 class StatsDTest extends \PHPUnit_Framework_TestCase
 {
@@ -73,7 +72,7 @@ class StatsDTest extends \PHPUnit_Framework_TestCase
 	}
 
 	protected function createHandlerMock() {
-		$handler = $this->getMock('StatsD\NodeJsHandler', array(), array(), '', false);
+		$handler = $this->getMock('StatsD\UdpHandler', array(), array(), '', false);
 		$handler->expects($this->any())
 				->method('open')
 				->will($this->returnValue(true));
