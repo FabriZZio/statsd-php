@@ -34,7 +34,7 @@ class StatsD
         $this->send(array($stat => "$time|ms"), $sampleRate);
     }
 
-	/** Update stat(s) **/
+	/** Update count stat(s) **/
 	public function update($stats, $delta = 1, $sampleRate = 1) 
 	{
 		if (!is_array($stats)) { $stats = array($stats); }
@@ -45,6 +45,18 @@ class StatsD
 
         $this->send($data, $sampleRate);
 	}
+
+    /** Update gauge stat(s) **/
+    public function gauge($stats, $delta = 1)
+    {
+        if (!is_array($stats)) { $stats = array($stats); }
+        $data = array();
+        foreach($stats as $stat) {
+            $data[$stat] = "$delta|g";
+        }
+
+        $this->send($data);
+    }
 
 	/** Send data over UDP **/
     protected function send(array $data, $sampleRate = 1)
