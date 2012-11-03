@@ -15,6 +15,9 @@ class StatsD
     /** @var string */
     protected static $defaultNamespace;
 
+    /** @var StatsD */
+    protected static $instance;
+
 	public function __construct(Handler $handler) {
 		$this->handler = $handler;
 	}
@@ -117,15 +120,16 @@ class StatsD
         return $this->namespace ? $this->namespace : (self::$defaultNamespace ? self::$defaultNamespace : null);
     }
 
-    public static function getInstance($handler = null) {
-        if(!$handler) {
-            if(self::$defaultHandler) {
-                $handler = self::$defaultHandler;
-            } else {
+    public static function getInstance()
+    {
+        if(!self::$instance)
+        {
+            if(!self::$defaultHandler) {
                 throw new \Exception('No default StatsD Handler set...');
             }
+            self::$instance = new self(self::$defaultHandler);
         }
-        return new self($handler);
+        return self::$instance;
     }
 
     public static function setDefaultNamespace($namespace) {

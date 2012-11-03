@@ -8,25 +8,35 @@ This implementaton is based on the provided PHP example in the original [StatsD]
 Usage
 -----
 
-Initializing the statsD client is simple:
+If you want to use the component statically (which you should, you don't want to clutter your object graph with this dependency):
 
-    use StatsD\StatsD;
-    use StatsD\UdpHandler;
+    // in some bootstap file...
+    \StatsD\StatsD::setDefaultHandler(new \StatsD\UdpHandler($config->monitoring->host));
+    \StatsD\StatsD::setDefaultNamespace($config->monitoring->namespace); (*)
 
-    $statsD = new StatsD(new UdpHandler('localhost'));
+(*) You should set a default namespace if you're planning to use the same StatsD daemon for different applications.
+It's a good idea to mention the application name and environment in the namespace, for instance: "some-application.production".
 
-Incrementing or decrementing a specific stat: 
+Incrementing or decrementing a specific stat:
 
-    $statsD->increment('stats.some-stat');
-    $statsD->decrement('stats.some-stat');
+    // anywhere in your application
+    \StatsD\StatsD::getInstance()->increment('stats.some-stat');
+    \StatsD\StatsD::getInstance()->decrement('stats.some-stat');
 
 Update a statistic with a specified value:
 
-    $statsD->update('stats.some-stat', 2);
+    \StatsD\StatsD::getInstance()->update('stats.some-stat', 2);
+
+Update a statistic with an arbitrary value (gauge):
+
+    \StatsD\StatsD::getInstance()->gauge('stats.some-stat', 100);
 
 For statistics under heavy, really heavy load, use a sample rate:
 
-    $statsD->increment('stats.some-busy-stat', 123, 0.1);
+    \StatsD\StatsD::getInstance()->increment('stats.some-busy-stat', 123, 0.1);
+
+
+Note: You can also initialize the component via its constructor, but you'll have to inject it in every component you'll want to use it.
 
 [etsy]: http://www.etsy.com
 [statsd]: https://github.com/etsy/statsd

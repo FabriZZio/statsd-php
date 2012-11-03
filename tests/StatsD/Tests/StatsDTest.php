@@ -84,6 +84,24 @@ class StatsDTest extends \PHPUnit_Framework_TestCase
         $statsD->update('stats.test', 123);
     }
 
+    /**
+     * @test
+     * @expectedException Exception
+     */
+    public function DefaultHandlerHasToBeSetWhenInstantiatingStatically()
+    {
+        \StatsD\StatsD::getInstance();
+    }
+
+    /** @test */
+    public function CanBeHandledAsSingleton()
+    {
+        \StatsD\StatsD::setDefaultHandler($this->getMock('StatsD\UdpHandler', array(), array(), '', false));
+        $firstInstance = \StatsD\StatsD::getInstance();
+        $secondInstance = \StatsD\StatsD::getInstance();
+        $this->assertEquals(spl_object_hash($firstInstance), spl_object_hash($secondInstance));
+    }
+
 	protected function createHandlerMock() {
 		$handler = $this->getMock('StatsD\UdpHandler', array(), array(), '', false);
 		$handler->expects($this->any())
