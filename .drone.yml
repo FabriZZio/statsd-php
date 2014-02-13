@@ -1,0 +1,8 @@
+image: php5.5
+script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --no-interaction
+notify:
+  email:
+    recipients:
+      - contact@dieterprovoost.be

@@ -8,5 +8,8 @@
     ],
     "autoload": {
         "psr-0": { "StatsD": "lib/" }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
     }
 }
