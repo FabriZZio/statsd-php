@@ -1,4 +1,4 @@
-image: php5.5
+image: fabrizzio/docker-php-ci
 script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --no-interaction
